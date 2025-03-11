@@ -29,19 +29,16 @@ jobs:
         submodules: recursive
 
     - name: Set up GitHub authentication
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
-
-    - name: Set up Git user
       run: |
         git config --global user.name "${{ github.actor }}"
         git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-        
-    - name: Fetch all branches
-      run: git fetch
-        
-    - name: Initialize submodules
-      run: git submodule update --init --recursive
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                
+    - name: Fetch all branches and initialize submodules
+      run: |
+        git fetch --all
+        git submodule update --init --recursive
 
     - name: Install cmake
       run: command -v cmake >/dev/null 2>&1 || sudo apt install -y cmake
