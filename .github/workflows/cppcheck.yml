@@ -24,21 +24,22 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        fetch-depth: 0
+        submodules: recursive
         
-    - name: Set up Git user
+    - name: Set up GitHub authentication
       run: |
-        git config --global user.name "Blaz Baskovc"
-        git config --global user.email "blaz.baskovc@gmail.com"
+        git config --global user.name "${{ github.actor }}"
+        git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
-    - name: Fetch all branches
-      run: git fetch
+    - name: Fetch all branches and initialize submodules
+      run: |
+        git fetch --all
+        git submodule update --init --recursive
 
     - name: Install cppcheck
-      run: |
-        sudo apt update
-        sudo apt install -y cppcheck
+      run: command -v cppcheck >/dev/null 2>&1 || sudo apt install -y cppcheck
         
     - name: Ready Environment
       run: mkdir -p artifacts/cppcheck artifacts/html artifacts/build
