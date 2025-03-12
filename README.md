@@ -1,12 +1,14 @@
-# CI/CD Flow Templates
+# CI/CD Flow Template
 
-[![GitHub license](https://img.shields.io/github/license/bbaskovc/cicd)](https://github.com/bbaskovc/cicd/blob/feature/organise-project/LICENSE.md)
-[![GitHub stars](https://img.shields.io/github/stars/bbaskovc/cicd-flow-templates)](https://github.com/bbaskovc/cicd/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/bbaskovc/cicd)](https://github.com/bbaskovc/cicd/network)
-[![GitHub issues](https://img.shields.io/github/issues/bbaskovc/cicd)](https://github.com/bbaskovc/cicd/issues)
-[![GitHub pull requests](https://img.shields.io/github/issues-pr/bbaskovc/cicd)](https://github.com/bbaskovc/cicd/pulls)
-
-
+<p align="center">
+    <a href="https://github.com/bbaskovc/cicd/blob/main/LICENSE.md"><img src="https://img.shields.io/github/license/bbaskovc/cicd.svg" alt="GitHub License"></a>
+    <a href="http://ansicolortags.readthedocs.io/?badge=latest"><img src="https://readthedocs.org/projects/ansicolortags/badge/?version=latest" alt="Documentation Status"></a>
+    <a href="https://github.com/bbaskovc/cicd/issues"><img src="https://img.shields.io/github/issues/bbaskovc/cicd.svg" alt="GitHub Issues"></a>
+    <a href="https://github.com/bbaskovc/cicd/releases/"><img src="https://img.shields.io/github/release/bbaskovc/cicd.svg" alt="GitHub Release"></a>
+    <br/>
+    <a href="https://github.com/bbaskovc/cicd/stargazers/"><img src="https://img.shields.io/github/stars/bbaskovc/cicd.svg?style=social&label=Star" alt="GitHub Stars"></a>
+    <a href="https://github.com/bbaskovc/cicd/network/"><img src="https://img.shields.io/github/forks/bbaskovc/cicd.svg?style=social&label=Fork" alt="GitHub Forks"></a>
+</p>
 
 Welcome to the CI/CD Flow Templates repository! This repository contains a collection of reusable CI/CD (Continuous Integration/Continuous Deployment) templates designed to streamline your development workflow. Whether you're setting up a new project or optimizing an existing one, these templates can help you get started quickly and efficiently.
 
@@ -14,6 +16,7 @@ Welcome to the CI/CD Flow Templates repository! This repository contains a colle
 
 - [Introduction](#introduction)
 - [Features](#features)
+- [Folder & File Structure](#folder--file-structure)
 - [Getting Started](#getting-started)
 - [Usage](#usage)
   - [Using as a Git Template](#using-as-a-git-template)
@@ -32,6 +35,19 @@ CI/CD pipelines are essential for modern software development, enabling automate
 - **Customizable**: Easily adaptable to fit different project structures and requirements.
 - **Best Practices**: Incorporates industry best practices for CI/CD pipelines.
 - **Documentation**: Clear and concise documentation to help you understand and use the templates effectively.
+
+## Folder & File Structure
+
+```bash
+cicd/
+├── templates/                # Workflow templates for CI/CD.
+│   └── github/               # GitHub Actions workflow templates.
+│       ├── ctest.yml         # Workflow for running CTest.
+│       ├── gtest.yml         # Workflow for running Google Test (GTest).
+│       └── cppcheck.yml      # Workflow for running CppCheck static analysis.
+├── LICENSE.md                # License terms for the repository.
+└── README.md                 # Documentation and usage instructions.
+```
 
 ## Getting Started
 
