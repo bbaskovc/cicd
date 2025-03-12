@@ -1,13 +1,11 @@
 # CI/CD Flow Templates
 
-[![GitHub license](https://img.shields.io/github/license/bbaskovc/cicd)](https://github.com/bbaskovc/cicd/blob/main/LICENSE.md)
-[![GitHub stars](https://img.shields.io/github/stars/your-username/cicd-flow-templates)](https://github.com/bbaskovc/cicd/stargazers)
+[![GitHub license](https://img.shields.io/github/license/bbaskovc/cicd)](https://github.com/bbaskovc/cicd/blob/feature/organise-project/LICENSE.md)
+[![GitHub stars](https://img.shields.io/github/stars/bbaskovc/cicd-flow-templates)](https://github.com/bbaskovc/cicd/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/bbaskovc/cicd)](https://github.com/bbaskovc/cicd/network)
 [![GitHub issues](https://img.shields.io/github/issues/bbaskovc/cicd)](https://github.com/bbaskovc/cicd/issues)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/bbaskovc/cicd)](https://github.com/bbaskovc/cicd/pulls)
 
-
-[![CI/CD Workflow](https://github.com/bbaskovc/cicd/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/bbaskovc/cicd/actions/workflows/ci-cd.yml)
 
 
 Welcome to the CI/CD Flow Templates repository! This repository contains a collection of reusable CI/CD (Continuous Integration/Continuous Deployment) templates designed to streamline your development workflow. Whether you're setting up a new project or optimizing an existing one, these templates can help you get started quickly and efficiently.
