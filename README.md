@@ -1,7 +1,7 @@
 # CI/CD Flow Template
 
 <p align="center">
-    <a href="https://github.com/bbaskovc/cicd/blob/main/LICENSE"><img src="https://img.shields.io/github/license/bbaskovc/cicd.svg" alt="GitHub License"></a>
+    <a href="https://github.com/bbaskovc/cicd/blob/main/LICENSE.md"><img src="https://img.shields.io/github/license/bbaskovc/cicd.svg" alt="GitHub License"></a>
     <a href="http://ansicolortags.readthedocs.io/?badge=latest"><img src="https://readthedocs.org/projects/ansicolortags/badge/?version=latest" alt="Documentation Status"></a>
     <a href="https://github.com/bbaskovc/cicd/issues"><img src="https://img.shields.io/github/issues/bbaskovc/cicd.svg" alt="GitHub Issues"></a>
     <a href="https://github.com/bbaskovc/cicd/releases/"><img src="https://img.shields.io/github/release/bbaskovc/cicd.svg" alt="GitHub Release"></a>
