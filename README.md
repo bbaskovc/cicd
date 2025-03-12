@@ -84,7 +84,7 @@ You can directly use the workflows from this repository in your own GitHub Actio
 
    jobs:
      ctest:
-       uses: [bbaskovc/cicd/templates/github/ctest.yml](https://github.com/bbaskovc/cicd/blob/main/templates/github/ctest.yml)@main
+       uses: [bbaskovc/cicd/templates/github/ctest.yml](https://github.com/bbaskovc/cicd/blob/main/.github/workflows/ctest.yml)@main
        with:
          test_dir: 'tests/ctest'
          project_name: 'my_project_ctest'
