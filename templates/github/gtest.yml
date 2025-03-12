@@ -1,0 +1,93 @@
+name: Gtest Workflow
+
+on:
+  workflow_call:
+    inputs:
+      test_dir:
+        description: 'Directory containing the tests'
+        required: true
+        type: string
+
+      project_name:
+        description: 'Project name (if known, otherwise extracted from CMake)'
+        required: true
+        type: string
+
+      cmake_options:
+        description: 'Additional options for CMake configuration'
+        required: false
+        default: '-DCMAKE_EXPORT_COMPILE_COMMANDS=TRUE'
+        type: string
+
+jobs:
+  workflow:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - name: Set up GitHub authentication
+      run: |
+        git config --global user.name "${{ github.actor }}"
+        git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Fetch all branches and initialize submodules
+      run: |
+        git fetch --all
+        git submodule update --init --recursive
+
+    - name: Install cmake
+      run: command -v cmake >/dev/null 2>&1 || sudo apt install -y cmake
+
+    - name: Ready environment
+      run: mkdir -p artifacts/gtest artifacts/lcov artifacts/bin artifacts/build
+
+    - name: Configure CMake
+      run: cmake -S ${{ inputs.test_dir }} -B build ${{ inputs.cmake_options }}
+
+    - name: Build project
+      run: |
+        cmake --build build
+        cp build/${{ inputs.project_name}}_* artifacts/bin/
+        cp build/compile_commands.json artifacts/build
+        cp build/CMakeCache.txt artifacts/build
+
+    - name: Run gtest with ctest
+      run: |
+        ctest --test-dir build --no-compress-output --output-on-failure
+        cp -r build/Testing artifacts/gtest
+
+    - name: Run gtest executable
+      run: |
+        EXECUTABLE=$(find build -type f -executable -name ${{ inputs.project_name }}"_*")  
+        if [ -n "$EXECUTABLE" ]; then  
+          echo "Running test executable: $EXECUTABLE"  
+          "$EXECUTABLE"  
+        else  
+          echo "No test executable found!"  
+          exit 1  
+        fi
+        
+    - name: Delete test branch
+      if: always()
+      run: |
+        git checkout main
+        git branch -D test/gtest
+        git push origin --delete test/gtest
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name:  ${{ inputs.project_name }}
+        path: artifacts/
+        if-no-files-found: error
+        retention-days: 30
+        
+
+
+

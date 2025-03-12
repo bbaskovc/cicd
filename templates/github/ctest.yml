@@ -1,0 +1,96 @@
+name: Ctest Workflow
+
+on:
+  workflow_call:
+    inputs:
+      test_dir:
+        description: 'Directory containing the tests'
+        required: true
+        type: string
+
+      project_name:
+        description: 'Project name (if known, otherwise extracted from CMake)'
+        required: true
+        type: string
+
+      cmake_options:
+        description: 'Additional options for CMake configuration'
+        required: false
+        default: '-DCMAKE_EXPORT_COMPILE_COMMANDS=TRUE -DCOVERAGE=ON'
+        type: string
+
+jobs:
+  workflow:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - name: Set up GitHub authentication
+      run: |
+        git config --global user.name "${{ github.actor }}"
+        git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                
+    - name: Fetch all branches and initialize submodules
+      run: |
+        git fetch --all
+        git submodule update --init --recursive
+
+    - name: Install cmake
+      run: command -v cmake >/dev/null 2>&1 || sudo apt install -y cmake
+      
+    - name: Install lcov
+      run: command -v lcov >/dev/null 2>&1 || sudo apt install -y lcov
+            
+    - name: Install gzip
+      run: command -v gzip >/dev/null 2>&1 || sudo apt install -y gzip
+      
+    - name: Ready environment
+      run: mkdir -p artifacts/ctest artifacts/lcov artifacts/bin artifacts/build
+
+    - name: Configure CMake
+      run: cmake -S ${{ inputs.test_dir }} -B build ${{ inputs.cmake_options }}
+
+    - name: Build project
+      run: |
+        cmake --build build
+        cp build/${{ inputs.project_name}}_* artifacts/bin/
+        cp build/compile_commands.json artifacts/build
+        cp build/CMakeCache.txt artifacts/build
+
+    - name: Run ctest
+      run: |
+        ctest --test-dir build --no-compress-output --output-on-failure
+        cp -r build/Testing artifacts/ctest
+
+    - name: Run lcov
+      run: |
+        lcov --capture --directory build --output-file coverage.info
+        genhtml coverage.info --output-directory coverage-report
+        cp -r coverage.info artifacts/lcov/
+        cp -r coverage-report/* artifacts/lcov/
+
+    - name: Delete test branch
+      if: always()
+      run: |
+        git checkout main
+        git branch -D test/ctest
+        git push origin --delete test/ctest
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name:  ${{ inputs.project_name }}
+        path: artifacts/
+        if-no-files-found: error
+        retention-days: 30
+        
+
+
+
+
